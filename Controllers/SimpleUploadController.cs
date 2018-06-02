@@ -2,6 +2,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using vue_experiments.Models;
 
 namespace vue_experiments.Controllers
 {
@@ -13,8 +14,7 @@ namespace vue_experiments.Controllers
             _environment = environment;
         }
 
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Upload()
+        public async Task<IActionResult> Upload(Coffee coffee)
         {
             var uploadsRootFolder = Path.Combine(_environment.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsRootFolder))

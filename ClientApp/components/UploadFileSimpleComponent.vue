@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h3>Add a new Coffee</h3>
-        <form>
+        <form @submit="submitted" action="/SimpleUpload/Upload" method="post">
             <div class="form-group">
                 <label class="control-label">Coffee Name</label>
                 <input required type="text" class="form-control" name="Name">
@@ -34,6 +34,11 @@ export default {
                     { name: 'Mocha', value: 2, },
                 ]
             };
+        },
+        methods: {
+            submitted: function (data) {
+                console.log(data);
+            }
         }
 }
 </script>
