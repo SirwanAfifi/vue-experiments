@@ -92,7 +92,7 @@ export default class UploadFileSimpleComponent extends Vue {
 
   submitted() {
     coffeeService
-      .saveCoffee(this.model, (<any>this.$refs.image).files)
+      .saveCoffee(this.model, (<any>this.$refs.image).files[0])
       .then(function(response: any) {
         toastr.success(response.data);
       })

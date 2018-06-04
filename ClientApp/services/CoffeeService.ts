@@ -3,16 +3,15 @@ import { eventBus } from '../main';
 
 class CoffeeService {
 
-    saveCoffee(coffee: any, filesList: any): any {
+    saveCoffee(coffee: any, file: any): any {
         const formData = new FormData();
         for (const key in coffee) {
             if (coffee.hasOwnProperty(key)) {
                 formData.append(key, coffee[key]);
             }
         }
-        for (let i = 0; i < filesList.length; i++) {
-            formData.append(filesList[i].name, filesList[i]);
-        }
+        
+        formData.append(file.name, file);
 
         let startTime = Date.now();
 
