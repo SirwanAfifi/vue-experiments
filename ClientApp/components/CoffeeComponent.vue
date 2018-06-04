@@ -16,7 +16,7 @@
 
             <div class="form-group">
                 <label class="control-label">Coffee Image</label>
-                <input required type="file" multiple class="form-control" name="Image" @change="fileChange" ref="image">
+                <input required type="file" class="form-control" name="Image" ref="image">
             </div>
 
             <button class="btn btn-primary" type="submit">Save</button>
@@ -100,11 +100,7 @@ export default class UploadFileSimpleComponent extends Vue {
         toastr.error(error);
       });
   }
-
-  fileChange() {
-    console.log((<any>this.$refs.image).files);
-  }
-
+  
   created() {
     eventBus.$on("uploadData", (details: any) => {
       console.log(details);
