@@ -3,18 +3,35 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using vue_experiments.Models;
+using vue_experiments.Services;
 
 namespace vue_experiments.Controllers
 {
-    public class SimpleUploadController : Controller
+    public class CoffeesController : Controller
     {
         private readonly IHostingEnvironment _environment;
-        public SimpleUploadController(IHostingEnvironment environment)
+        private readonly ICoffeeService _coffeeService;
+
+        public CoffeesController(IHostingEnvironment environment, ICoffeeService coffeeService)
         {
             _environment = environment;
+            _coffeeService = coffeeService;
         }
 
-        public async Task<IActionResult> Upload(Coffee coffee)
+        public async Task<IActionResult> SaveCoffee(Coffee coffee)
+        {
+            // Uploading files
+            var fileName = await UploadFiles();
+
+            // Saving data
+            coffee.Image = fileName;
+            _coffeeService.Add(coffee);
+            _coffeeService.SaveChanges();
+
+            return Json("Coffee has been saved!");
+        }
+
+        private async Task<string> UploadFiles()
         {
             var uploadsRootFolder = Path.Combine(_environment.WebRootPath, "uploads");
             if (!Directory.Exists(uploadsRootFolder))
@@ -24,6 +41,7 @@ namespace vue_experiments.Controllers
 
             var files = Request.Form.Files;
             foreach (var file in files)
+
             {
                 if (file == null || file.Length == 0)
                 {
@@ -34,10 +52,11 @@ namespace vue_experiments.Controllers
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await file.CopyToAsync(fileStream).ConfigureAwait(false);
+                    return file.FileName;
                 }
             }
 
-            return Content("Uploaded");
+            return string.Empty;
         }
     }
 }

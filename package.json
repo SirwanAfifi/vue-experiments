@@ -9,6 +9,8 @@
   "author": "Sirwan Afifi",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.18.0",
+    "toastr": "^2.1.4",
     "ts-loader": "^4.3.0",
     "typescript": "^2.8.3",
     "vue": "^2.5.16",
